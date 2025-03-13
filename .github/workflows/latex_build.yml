@@ -24,11 +24,13 @@ jobs:
         with:
           root_file: Paragraph_14a.tex
           args: -synctex=0 -interaction=nonstopmode --shell-escape -pdf -file-line-error
+      - name: Rename PDF file
+        run: mv Paragraph_14a.pdf Paragraph_14a_${{ env.TAG }}.pdf
       - name: Save PDF as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Paragraph_14a.pdf
-          path: Paragraph_14a.pdf
+          name: PDF
+          path: Paragraph_14a_${{ env.TAG }}.pdf
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
