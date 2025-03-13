@@ -38,12 +38,10 @@ jobs:
       - name: Create Release
         id: create_release
         run: |
-          UPLOAD_URL=$(gh release create ${{ env.TAG }} \
+          gh release create ${{ env.TAG }} \
             --title "Presentation_${{ env.RELEASE_NAME }}" \
-            --notes "Automatically generated release" \
-            --json upload_url \
-            --jq '.upload_url')
-          echo "UPLOAD_URL=$UPLOAD_URL" >> "$GITHUB_ENV"
+            --notes "Automatically generated release"
+          echo "UPLOAD_URL=$(gh release view ${{ env.TAG }} --json uploadUrl --jq .uploadUrl)" >> "$GITHUB_ENV"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -53,7 +51,7 @@ jobs:
             --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
+
       # - name: Create Release
       #   id: create_release
       #   uses: actions/create-release@v1
