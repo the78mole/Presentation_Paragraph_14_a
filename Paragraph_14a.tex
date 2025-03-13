@@ -30,14 +30,15 @@
 \usepackage{multirow}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{pifont}
-
 \usepackage{eurosym}
+\usepackage{fontawesome}
+
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepackage{pgfplotstable}
+ 
 \usepackage{xcolor}
 \usepackage{transparent}
-\usepackage{fontawesome}
 \usepackage{siunitx}
 \usepackage{array, dcolumn}
 
@@ -78,6 +79,11 @@
    \end{tikzpicture}
 }
 
+\newcommand{\smp}{\includegraphics[width=0.2cm]{images/party.png}}
+\newcommand{\sml}{\includegraphics[width=0.2cm]{images/lacheln.png}}
+\newcommand{\smn}{\includegraphics[width=0.2cm]{images/neutral.png}}
+\newcommand{\sms}{\includegraphics[width=0.2cm]{images/traurig.png}}
+
 \begin{document}
 
 % Titelseite
@@ -108,5 +114,14 @@
 
 \include{subdocs/99_outro}
 
+% Referenzen
+\begin{frame}[allowframebreaks]{Quellenverzeichnis}
+   %\bibliography{references.bib}
+   %\bibliographystyle{plain}
+   \begingroup
+      \renewcommand{\bibfont}{\scriptsize} % Verkleinert den Text der Bibliographie
+      \printbibliography[heading=none]
+   \endgroup
+\end{frame}
 
 \end{document}
