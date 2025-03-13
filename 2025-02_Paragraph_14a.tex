@@ -1,0 +1,112 @@
+\documentclass{beamer}
+
+% Theme selection
+\usetheme{Madrid}
+\useoutertheme{miniframes}
+\useinnertheme{circles}
+
+
+\definecolor{UBCgreen}{rgb}{0.05, 0.4, 0.1}
+\definecolor{UBCorange}{rgb}{1.0, 0.6, 0.0}
+\definecolor{UBClightorng}{rgb}{1.0, 0.85, 0.3}
+\definecolor{UBCdrkgry}{rgb}{0.3, 0.3, 0.3}
+
+\usecolortheme[named=UBCgreen]{structure}
+
+\setbeamercolor{frametitle}{fg=white,bg=UBCorange} 
+\setbeamercolor{title}{fg=UBCorange} 
+\setbeamercolor{block title}{fg=UBCdrkgry, bg=UBClightorng} 
+\setbeamercolor{progress bar}{fg=UBCorange,bg=UBCgreen} 
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true}
+
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pifont}
+
+\usepackage{eurosym}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{xcolor}
+\usepackage{transparent}
+\usepackage{fontawesome}
+\usepackage{siunitx}
+\usepackage{array, dcolumn}
+
+\usepackage{csquotes}
+
+\usepackage[absolute,overlay]{textpos}
+
+\usepackage[backend=biber]{biblatex}
+\addbibresource{references.bib}
+
+\title{§14a EnWG \- Steuerbare Verbraucher}
+\author{Daniel Glaser}
+\date{\today}
+
+\newcommand{\grok}{\multirow{2}{*}{{\color{green}\ding{51}}}}
+\newcommand{\rdno}{\multirow{2}{*}{{\color{red}\ding{55}}}}
+\newcommand{\TimeBar}[1]{
+   % Usage:   \TimeBar{<COLOR>/<START>/<END>, <COLOR>/<START>/<END>,...}
+   % Examlpe: \TimeBar{green/0/5, yellow/5/17, red/17/21, yellow/21/24}
+   \begin{tikzpicture}
+      \def\totalwidth{2.5}
+      \def\starttime{0}
+      \def\endtime{24}
+      \def\height{.2}
+
+      \foreach \c/\start/\end in {#1} {
+         \pgfmathsetmacro{\xstart}{(\start-\starttime)/(\endtime-\starttime)*\totalwidth}
+         \pgfmathsetmacro{\xend}{(\end-\starttime)/(\endtime-\starttime)*\totalwidth}
+         \fill[\c] (\xstart, 0) rectangle (\xend, \height);
+      }
+
+      \draw[black, very thin] (0, 0) rectangle (\totalwidth, \height);
+      \foreach \dash in {6,12,18} {
+         \pgfmathsetmacro{\xpos}{(\dash)/(\endtime)*\totalwidth}
+         \draw[densely dotted, very thin] (\xpos,0) -- (\xpos,\height);
+      }
+
+   \end{tikzpicture}
+}
+
+\begin{document}
+
+% Titelseite
+\begin{frame}
+   \begin{tikzpicture}[remember picture, overlay]
+      \node[at=(current page.center),opacity=0.1,yshift=-0.3cm]{
+            \includegraphics[height=0.9\paperheight]{images/Steuerbare_Verbraucher.png}
+      };
+   \end{tikzpicture}
+   \titlepage
+   \begin{textblock*}{3cm}(0.3cm,6.6cm)  % Position (x,y) in cm anpassen
+      \includegraphics[width=5cm]{images/Logo_EWERH_eV_small.png}
+   \end{textblock*}
+\end{frame}
+
+% Inhaltsverzeichnis
+\begin{frame}{Inhaltsverzeichnis}
+   \tableofcontents
+\end{frame}
+
+\include{subdocs/01_intro}
+
+\include{subdocs/02_technical}
+
+\include{subdocs/03_commercial}
+
+\include{subdocs/04_regional}
+
+\include{subdocs/99_outro}
+
+
+\end{document}

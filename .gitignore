@@ -1,0 +1,46 @@
+# LaTeX Build Artefakte
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.idx
+*.ilg
+*.ind
+*.lof
+*.lot
+*.nav
+*.out
+*.snm
+*.toc
+*.synctex.gz
+*.log
+*.vrb
+*.bbl-SAVE-ERROR
+*.bcf
+*.run.xml
+*.synctex*
+
+# PDF und sonstige generierte Dateien
+*.pdf
+*.dvi
+*.ps
+
+# Editor-spezifische Dateien
+*.bak
+*.swp
+*.swo
+*~
+*.backup
+
+# MacOS-spezifische Dateien
+.DS_Store
+._*
+
+# VSCode Arbeitsbereiche
+.vscode/
+
+# Custom temp working directories
+/calcs/
+/information/

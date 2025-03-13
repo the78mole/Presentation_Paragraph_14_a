@@ -1,0 +1,3 @@
+defaultIndent: "   "  # Standard-Indentation
+modifyLineBreaks:
+  tabular: "no"
