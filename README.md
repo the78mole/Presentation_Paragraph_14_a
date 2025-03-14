@@ -1,4 +1,5 @@
-# Presentation_Paragraph_14_a
+# Presentation zu §14a EnWG - Steuerbare Verbrauchseinrichtungen
+
 Eine kurze Präsentation zu §14a EnWG - Steuerbare Verbraucher, mit Fokus auf Erlangen und Umgebung. Die Präsentation wurde vom Verein [**Energiwende Erlangen e.V.**](https://energiewende-erlangen.de) initiiert.
 
 Die Präsentation ist in folgene Abschnitte unterteilt:
