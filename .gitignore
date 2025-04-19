@@ -37,6 +37,9 @@
 # Environment (save secrets)
 .env
 
+# Ephemeral and testing files
+release-notes.md
+
 # MacOS-spezifische Dateien
 .DS_Store
 ._*
