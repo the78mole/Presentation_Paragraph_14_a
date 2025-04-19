@@ -3,7 +3,8 @@
         "dockerfile": "Dockerfile"
     },
     "features": {
-        "ghcr.io/devcontainers/features/github-cli:1": {}
+        "ghcr.io/devcontainers/features/github-cli:1": {},
+        "ghcr.io/devcontainers-extra/features/go-task:1": {}     
     },
     "remoteUser": "texlive",
     "customizations": {
@@ -22,6 +23,8 @@
     "mounts": [
         // "source=${env:USERPROFILE}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached" // Windows only to use Git credentials
     ],
-    "postCreateCommand": "sed -i 's/\r$//' .devcontainer/misc/*.sh;sh .devcontainer/misc/initialize.sh",
-    "postAttachCommand": "git config --global core.editor \"code --wait\""
+    "postCreateCommand": 
+      "sed -i 's/\r$//' .devcontainer/misc/*.sh;sh .devcontainer/misc/initialize.sh",
+    "postAttachCommand": "git config --global core.editor \"code --wait\"",
+    "runArgs": ["--env-file",".env"]
 }

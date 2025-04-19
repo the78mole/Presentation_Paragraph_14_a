@@ -1,0 +1,19 @@
+version: '3'
+
+tasks:
+  tag-and-push:
+    desc: Führe autotag.sh aus und pushe Commits sowie Tags
+    cmds:
+      - ./scripts/autotag.sh
+      - git push
+      - git push --tags
+
+  generate-release-notes:
+    desc: Erzeuge Release Notes basierend auf Commits
+    cmds:
+      - ./scripts/generate-release-notes.sh release-notes.md
+
+  build-pdf:
+    desc: Baue das LaTeX-Dokument über LaTeX-Workshop Recipe (oder latexmk fallback)
+    cmds:
+      - latexmk -pdf -interaction=nonstopmode -shell-escape Paragraph_14a.tex

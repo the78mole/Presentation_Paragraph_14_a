@@ -8,3 +8,6 @@ mkdir -p .github/workflows
 cp -n .devcontainer/ci/latex_build.yml .github/workflows
 # Copy Gitlab CI
 cp -n .devcontainer/ci/.gitlab-ci.yml ./
+
+echo 'source ~/.task-completion.bash' >> ~/.bashrc
+task --completion bash > ~/.task-completion.bash
