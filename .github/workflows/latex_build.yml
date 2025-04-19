@@ -34,14 +34,36 @@ jobs:
         with:
           name: Presentation.pdf
           path: Paragraph_14a_${{ env.TAG }}.pdf
-      
+      - name: Generate release notes from commits
+        run: |
+          # Vorherigen Tag finden
+          PREV_TAG=$(git tag --sort=-creatordate | grep -B1 "${{ env.TAG }}" | head -n 1)
+
+          # Falls kein vorheriger Tag gefunden wurde, nutze den ersten Commit
+          if [ -z "$PREV_TAG" ]; then
+            echo "No previous tag found, using initial commit."
+            RANGE=""
+          else
+            echo "Previous tag: $PREV_TAG"
+            RANGE="$PREV_TAG..${{ env.TAG }}"
+          fi
+
+          # Release-Notes-Datei vorbereiten
+          echo "## Änderungen" > release-notes.md
+          echo "" >> release-notes.md
+
+          # Commit-Liste hinzufügen
+          git log $RANGE --pretty=format:"- %s" >> release-notes.md
+
+          cat release-notes.md
       - name: Create Release
         id: create_release
         run: |
           gh release create ${{ env.TAG }} \
             --title "Presentation_${{ env.RELEASE_NAME }}" \
-            --notes "Automatically generated release"
-          echo "UPLOAD_URL=$(gh release view ${{ env.TAG }} --json uploadUrl --jq .uploadUrl)" >> "$GITHUB_ENV"
+            --notes-file release-notes.md
+          echo "UPLOAD_URL=$(gh release view ${{ env.TAG }} --json uploadUrl \
+            --jq .uploadUrl)" >> "$GITHUB_ENV"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
