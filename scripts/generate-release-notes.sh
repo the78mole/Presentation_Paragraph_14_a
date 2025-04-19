@@ -47,7 +47,8 @@ echo "📌 Verwende aktuellen Tag: $CURRENT_TAG"
 # 💡 Versuche, nur GitHub-Releases zu verwenden
 if command -v gh >/dev/null 2>&1; then
   echo "📦 Lade veröffentlichte Release-Tags von GitHub..."
-  TAGS=($(gh release list --limit 100 --json tagName --jq '.[].tagName' | grep -E '^v[0-9]{4}\.[0-9]+$' | sort -Vr))
+  TAGS=($(gh release list --limit 100 --json tagName,createdAt \
+  --jq 'sort_by(.createdAt) | reverse | .[].tagName' | grep -E '^v[0-9]{4}\.[0-9]+$'))
 else
   echo "⚠️  GitHub CLI (gh) nicht verfügbar – verwende lokale Git-Tags."
   TAGS=($(git tag --sort=-v:refname | grep -E '^v[0-9]{4}\.[0-9]+$'))
