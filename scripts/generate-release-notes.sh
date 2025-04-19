@@ -54,6 +54,9 @@ else
   TAGS=($(git tag --sort=-v:refname | grep -E '^v[0-9]{4}\.[0-9]+$'))
 fi
 
+echo "🔍 Bekannte Release-Tags:"
+printf '%s\n' "${TAGS[@]}"
+
 # 🔙 Vorherigen Tag ermitteln
 PREV_TAG=""
 for ((i=0; i<${#TAGS[@]}; i++)); do
