@@ -10,86 +10,43 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Set up Git repository
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Holt alle Commits und Tags
-      - name: Get the last tag and commit hash
+
+      - name: Generate Release Notes
         run: |
-          LAST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
-          SHORT_COMMIT_HASH=$(git rev-parse --short HEAD)
-          RELEASE_NAME="${LAST_TAG}-${SHORT_COMMIT_HASH}"
-          echo "LAST_TAG=$LAST_TAG" >> $GITHUB_ENV
-          echo "RELEASE_NAME=$RELEASE_NAME" >> $GITHUB_ENV
-          echo "TAG=$LAST_TAG" >> $GITHUB_ENV
+          ./scripts/generate-release-notes.sh release-notes.md "${{ github.ref_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Compile LaTeX document
         uses: dante-ev/latex-action@latest
         with:
           root_file: Paragraph_14a.tex
           args: -synctex=0 -interaction=nonstopmode --shell-escape -pdf -file-line-error
-      - name: Rename PDF file
-        run: mv Paragraph_14a.pdf Paragraph_14a_${{ env.TAG }}.pdf
-      - name: Save PDF as Artifact
+
+      - name: Rename PDF
+        run: mv Paragraph_14a.pdf Paragraph_14a_${{ github.ref_name }}.pdf
+
+      - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: Presentation.pdf
-          path: Paragraph_14a_${{ env.TAG }}.pdf
-      - name: Generate release notes from commits
+          path: Paragraph_14a_${{ github.ref_name }}.pdf
+
+      - name: Create GitHub Release
         run: |
-          # Vorherigen Tag finden
-          PREV_TAG=$(git tag --sort=-creatordate | grep -B1 "${{ env.TAG }}" | head -n 1)
-
-          # Falls kein vorheriger Tag gefunden wurde, nutze den ersten Commit
-          if [ -z "$PREV_TAG" ]; then
-            echo "No previous tag found, using initial commit."
-            RANGE=""
-          else
-            echo "Previous tag: $PREV_TAG"
-            RANGE="$PREV_TAG..${{ env.TAG }}"
-          fi
-
-          # Release-Notes-Datei vorbereiten
-          echo "## Änderungen" > release-notes.md
-          echo "" >> release-notes.md
-
-          # Commit-Liste hinzufügen
-          git log $RANGE --pretty=format:"- %s" >> release-notes.md
-
-          cat release-notes.md
-      - name: Create Release
-        id: create_release
-        run: |
-          gh release create ${{ env.TAG }} \
-            --title "Presentation_${{ env.RELEASE_NAME }}" \
+          gh release create "${{ github.ref_name }}" \
+            --title "Presentation_${{ github.ref_name }}" \
             --notes-file release-notes.md
-          echo "UPLOAD_URL=$(gh release view ${{ env.TAG }} --json uploadUrl \
-            --jq .uploadUrl)" >> "$GITHUB_ENV"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload Release Asset
+      - name: Upload PDF to Release
         run: |
-          gh release upload ${{ env.TAG }} "./Paragraph_14a_${{ env.TAG }}.pdf" \
-            --clobber
+          gh release upload "${{ github.ref_name }}" \
+            "./Paragraph_14a_${{ github.ref_name }}.pdf" --clobber
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # - name: Create Release
-      #   id: create_release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: ${{ env.TAG }}
-      #     release_name: Presentation_{{ env.RELEASE_NAME }}
-      #     draft: false
-      #     prerelease: false
-      # - name: Upload Release Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #     asset_path: ./Paragraph_14a_${{ env.TAG }}.pdf
-      #     asset_name: Paragraph_14a_${{ env.TAG }}.pdf
-      #     asset_content_type: application/pdf
