@@ -14,6 +14,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Holt alle Commits und Tags
+      
+      # Workaround for Windows devcontainer issue
+      - name: Make script executable
+        run: chmod +x ./scripts/generate-release-notes.sh
 
       - name: Generate Release Notes
         run: |
