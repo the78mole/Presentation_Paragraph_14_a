@@ -44,29 +44,29 @@ fi
 
 echo "📌 Verwende aktuellen Tag: $CURRENT_TAG"
 
-# 💡 Versuche, nur GitHub-Releases zu verwenden
+# Hole veröffentlichte GitHub Releases (ohne den aktuellen Tag)
 if command -v gh >/dev/null 2>&1; then
   echo "📦 Lade veröffentlichte Release-Tags von GitHub..."
-  TAGS=($(gh release list --limit 100 --json tagName,createdAt \
-  --jq 'sort_by(.createdAt) | reverse | .[].tagName' | grep -E '^v[0-9]{4}\.[0-9]+$'))
+  RAW_TAGS=$(gh release list --limit 100 --json tagName,createdAt \
+    --jq 'sort_by(.createdAt) | reverse | .[].tagName')
+  
+  TAGS=()
+  for tag in $RAW_TAGS; do
+    if [[ "$tag" =~ ^v[0-9]{4}\.[0-9]+$ && "$tag" != "$CURRENT_TAG" ]]; then
+      TAGS+=("$tag")
+    fi
+  done
 else
   echo "⚠️  GitHub CLI (gh) nicht verfügbar – verwende lokale Git-Tags."
-  TAGS=($(git tag --sort=-v:refname | grep -E '^v[0-9]{4}\.[0-9]+$'))
+  TAGS=($(git tag --sort=-creatordate | grep -E '^v[0-9]{4}\.[0-9]+$' | grep -v "$CURRENT_TAG"))
 fi
 
-echo "🔍 Bekannte Release-Tags:"
-printf '%s\n' "${TAGS[@]}"
+echo "🔍 Bekannte Release-Tags (ohne aktuellen):"
+printf ' - %s\n' "${TAGS[@]}"
 
-# 🔙 Vorherigen Tag ermitteln
-PREV_TAG=""
-for ((i=0; i<${#TAGS[@]}; i++)); do
-  if [[ "${TAGS[$i]}" == "$CURRENT_TAG" ]]; then
-    PREV_TAG=${TAGS[$((i+1))]}
-    break
-  fi
-done
-
-echo "🔙 Vorheriger Tag: ${PREV_TAG:-(keiner)}"
+# Vorherigen Release-Tag bestimmen
+PREV_TAG="${TAGS[0]}"
+echo "🔙 Vorheriger veröffentlichter Tag: ${PREV_TAG:-(keiner)}"
 
 # Commit-Log erzeugen
 HEADER="## Änderungen seit ${PREV_TAG:-dem Anfang}"
