@@ -11,7 +11,7 @@ tasks:
   generate-release-notes:
     desc: Erzeuge Release Notes basierend auf Commits
     cmds:
-      - ./scripts/generate-release-notes.sh release-notes.md
+      - ./scripts/generate-release-notes.sh
 
   build-pdf:
     desc: Baue das LaTeX-Dokument über LaTeX-Workshop Recipe (oder latexmk fallback)

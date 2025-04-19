@@ -2,7 +2,7 @@
 set -e
 
 show_help() {
-  cat <<EOF
+  cat >&2 <<EOF
 Usage: $(basename "$0") [release_notes_file] [current_tag]
 
 Generates release notes based on GitHub Releases or Git tags.
@@ -33,20 +33,20 @@ fi
 if [ -z "$CURRENT_TAG" ]; then
   CURRENT_TAG=$(git tag --points-at HEAD | grep -E '^v[0-9]{4}\.[0-9]+$' | head -n 1)
   if [ -z "$CURRENT_TAG" ]; then
-    echo "⚠️  Kein Tag auf HEAD, verwende letzten bekannten Tag..."
+    echo "⚠️  Kein Tag auf HEAD, verwende letzten bekannten Tag..." >&2
     CURRENT_TAG=$(git tag --sort=-creatordate | grep -E '^v[0-9]{4}\.[0-9]+$' | head -n 1)
     if [ -z "$CURRENT_TAG" ]; then
-      echo "❌ Kein passender Tag gefunden."
+      echo "❌ Kein passender Tag gefunden." >&2
       exit 1
     fi
   fi
 fi
 
-echo "📌 Verwende aktuellen Tag: $CURRENT_TAG"
+echo "📌 Verwende aktuellen Tag: $CURRENT_TAG" >&2
 
 # Hole veröffentlichte GitHub Releases (ohne den aktuellen Tag)
 if command -v gh >/dev/null 2>&1; then
-  echo "📦 Lade veröffentlichte Release-Tags von GitHub..."
+  echo "📦 Lade veröffentlichte Release-Tags von GitHub..." >&2
   RAW_TAGS=$(gh release list --limit 100 --json tagName,createdAt \
     --jq 'sort_by(.createdAt) | reverse | .[].tagName')
   
@@ -57,16 +57,16 @@ if command -v gh >/dev/null 2>&1; then
     fi
   done
 else
-  echo "⚠️  GitHub CLI (gh) nicht verfügbar – verwende lokale Git-Tags."
+  echo "⚠️  GitHub CLI (gh) nicht verfügbar – verwende lokale Git-Tags." >&2
   TAGS=($(git tag --sort=-creatordate | grep -E '^v[0-9]{4}\.[0-9]+$' | grep -v "$CURRENT_TAG"))
 fi
 
-echo "🔍 Bekannte Release-Tags (ohne aktuellen):"
-printf ' - %s\n' "${TAGS[@]}"
+echo "🔍 Bekannte Release-Tags (ohne aktuellen):" >&2
+printf ' - %s\n' "${TAGS[@]}" >&2
 
 # Vorherigen Release-Tag bestimmen
 PREV_TAG="${TAGS[0]}"
-echo "🔙 Vorheriger veröffentlichter Tag: ${PREV_TAG:-(keiner)}"
+echo "🔙 Vorheriger veröffentlichter Tag: ${PREV_TAG:-(keiner)}" >&2
 
 # Commit-Log erzeugen
 HEADER="## Änderungen seit ${PREV_TAG:-dem Anfang}"
@@ -77,7 +77,7 @@ else
 fi
 
 # Ausgabe
-if [ -n "$RELEASE_NOTES_FILE" ]; then
+if [[ -n "$RELEASE_NOTES_FILE" && ! "$RELEASE_NOTES_FILE" =~ ^v[0-9]{4}\.[0-9]+$ ]]; then
   {
     echo "$HEADER"
     echo ""
@@ -89,3 +89,4 @@ else
   echo ""
   echo "$BODY"
 fi
+
