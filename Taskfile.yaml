@@ -17,3 +17,8 @@ tasks:
     desc: Baue das LaTeX-Dokument über LaTeX-Workshop Recipe (oder latexmk fallback)
     cmds:
       - latexmk -pdf -interaction=nonstopmode -shell-escape Paragraph_14a.tex
+
+  clean-workflow-runs:
+    desc: Lösche alte Action-Runs
+    cmds:
+      - ./scripts/cleanup-workflow-runs.sh
