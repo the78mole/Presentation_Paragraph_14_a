@@ -40,11 +40,15 @@ jobs:
           name: Presentation.pdf
           path: Paragraph_14a_${{ github.ref_name }}.pdf
 
-      - name: Create GitHub Release
+      - name: Create GitHub Release if not exists
         run: |
-          gh release create "${{ github.ref_name }}" \
-            --title "Presentation_${{ github.ref_name }}" \
-            --notes-file release-notes.md
+          if ! gh release view "${{ github.ref_name }}" > /dev/null 2>&1; then
+            gh release create "${{ github.ref_name }}" \
+              --title "Presentation_${{ github.ref_name }}" \
+              --notes-file release-notes.md
+          else
+            echo "Release '${{ github.ref_name }}' already exists. Skipping creation."
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
