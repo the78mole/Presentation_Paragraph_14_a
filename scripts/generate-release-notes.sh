@@ -49,7 +49,7 @@ if command -v gh >/dev/null 2>&1; then
   echo "📦 Lade veröffentlichte Release-Tags von GitHub..." >&2
   RAW_TAGS=$(gh release list --limit 100 --json tagName,createdAt \
     --jq 'sort_by(.createdAt) | reverse | .[].tagName')
-  
+
   TAGS=()
   for tag in $RAW_TAGS; do
     if [[ "$tag" =~ ^v[0-9]{4}\.[0-9]+$ && "$tag" != "$CURRENT_TAG" ]]; then
@@ -89,4 +89,3 @@ else
   echo ""
   echo "$BODY"
 fi
-

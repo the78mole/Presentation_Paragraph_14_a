@@ -4,16 +4,15 @@
 [![GitHub tag](https://img.shields.io/github/tag/the78mole/Presentation_Paragraph_14_a)](https://github.com/the78mole/Presentation_Paragraph_14_a/releases/?include_prereleases&sort=semver "View GitHub releases")
 [![license](https://img.shields.io/badge/license-CC--BY--NC--SA--4.0-lightgrey)](https://github.com/the78mole/Presentation_Paragraph_14_a?tab=readme-ov-file#CC-BY-SA-4.0-1-ov-file)
 
-
 Eine kurze Präsentation zu §14a EnWG - Steuerbare Verbraucher, mit Fokus auf Erlangen und Umgebung. Die Präsentation wurde vom Verein [**Energiwende Erlangen e.V.**](https://energiewende-erlangen.de) initiiert.
 
 Die Präsentation ist in folgene Abschnitte unterteilt:
 
-  * Einführung in §14a
-  * Technische Umsetzung
-  * Wirtschaftliche Aspekte
-  * Regionales
-  * Und jetzt?
+- Einführung in §14a
+- Technische Umsetzung
+- Wirtschaftliche Aspekte
+- Regionales
+- Und jetzt?
 
 # Beisteuern
 
@@ -39,4 +38,4 @@ Um ein PDF zu generieren genügt es, eine Datei abzuspeichern. Der Build startet
 
 # Anpassungen des LaTeX devcontainers
 
-  * **Probleme mit chktex:** Das Dockerfile wurde angepasst, um die fehlerhafte Zeile der globalen `chktexrc` zu deaktivieren.
+- **Probleme mit chktex:** Das Dockerfile wurde angepasst, um die fehlerhafte Zeile der globalen `chktexrc` zu deaktivieren.

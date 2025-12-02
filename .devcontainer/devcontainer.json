@@ -1,30 +1,29 @@
 {
-    "build": {
-        "dockerfile": "Dockerfile"
-    },
-    "features": {
-        "ghcr.io/devcontainers/features/github-cli:1": {},
-        "ghcr.io/devcontainers-extra/features/go-task:1": {}     
-    },
-    "remoteUser": "texlive",
-    "customizations": {
-        "vscode": {
-            "extensions": [
-                "james-yu.latex-workshop",
-                "nickfode.latex-formatter",
-                "mathematic.vscode-latex",
-                "ms-azuretools.vscode-docker",
-                "meezilla.json",
-                "valentjn.vscode-ltex",
-                "github.vscode-github-actions"
-            ]
-        }
-    },
-    "mounts": [
-        // "source=${env:USERPROFILE}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached" // Windows only to use Git credentials
-    ],
-    "postCreateCommand": 
-      "sed -i 's/\r$//' .devcontainer/misc/*.sh;sh .devcontainer/misc/initialize.sh",
-    "postAttachCommand": "git config --global core.editor \"code --wait\"",
-    "runArgs": ["--env-file",".env"]
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {},
+    "ghcr.io/devcontainers-extra/features/go-task:1": {}
+  },
+  "remoteUser": "texlive",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "james-yu.latex-workshop",
+        "nickfode.latex-formatter",
+        "mathematic.vscode-latex",
+        "ms-azuretools.vscode-docker",
+        "meezilla.json",
+        "valentjn.vscode-ltex",
+        "github.vscode-github-actions"
+      ]
+    }
+  },
+  "mounts": [
+    // "source=${env:USERPROFILE}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached" // Windows only to use Git credentials
+  ],
+  "postCreateCommand": "sed -i 's/\r$//' .devcontainer/misc/*.sh;sh .devcontainer/misc/initialize.sh",
+  "postAttachCommand": "git config --global core.editor \"code --wait\"",
+  "runArgs": ["--env-file", ".env"]
 }

@@ -3,6 +3,7 @@ on:
   push:
     tags:
       - "v*"
+  pull_request:
 
 jobs:
   build_latex:
@@ -13,48 +14,58 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0  # Holt alle Commits und Tags
-      
+          fetch-depth: 0 # Holt alle Commits und Tags
+
       # Workaround for Windows devcontainer issue
       - name: Make script executable
         run: chmod +x ./scripts/generate-release-notes.sh
 
+      - name: Set version name
+        id: version
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "📝 This is a pull request build with PR #${{ github.event.pull_request.number }}."
+            echo "name=pr-${{ github.event.pull_request.number }}" >> $GITHUB_OUTPUT
+          else
+            echo "🏷️ This is a tag build with ref ${{ github.ref_name }}"
+            echo "name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          fi
+
       - name: Generate Release Notes
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           ./scripts/generate-release-notes.sh release-notes.md "${{ github.ref_name }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Compile LaTeX document
+        #uses: xu-cheng/latex-action@v4
         uses: dante-ev/latex-action@latest
         with:
           root_file: Paragraph_14a.tex
-          args: -synctex=0 -interaction=nonstopmode --shell-escape -pdf -file-line-error
+          #compiler: pdflatex
+          #args: -pdf
+          #args: "-pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode"
+          #args: -interaction=nonstopmode -pdf -file-line-error
+          #args: -interaction=nonstopmode -shell-escape
+          #args: -synctex=0 -interaction=nonstopmode --shell-escape -pdf -file-line-error
 
       - name: Rename PDF
-        run: mv Paragraph_14a.pdf Paragraph_14a_${{ github.ref_name }}.pdf
+        run: |
+          echo "📄 Renaming PDF to include version name: ${{ steps.version.outputs.name }}"
+          mv Paragraph_14a.pdf Paragraph_14a_${{ steps.version.outputs.name }}.pdf
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: Presentation.pdf
-          path: Paragraph_14a_${{ github.ref_name }}.pdf
+          path: Paragraph_14a_${{ steps.version.outputs.name }}.pdf
 
-      - name: Create GitHub Release if not exists
-        run: |
-          if ! gh release view "${{ github.ref_name }}" > /dev/null 2>&1; then
-            gh release create "${{ github.ref_name }}" \
-              --title "Presentation_${{ github.ref_name }}" \
-              --notes-file release-notes.md
-          else
-            echo "Release '${{ github.ref_name }}' already exists. Skipping creation."
-          fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload PDF to Release
-        run: |
-          gh release upload "${{ github.ref_name }}" \
-            "./Paragraph_14a_${{ github.ref_name }}.pdf" --clobber
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        if: ${{ startsWith(github.ref, 'refs/tags/') && !env.ACT }}
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Presentation_${{ github.ref_name }}"
+          body_path: release-notes.md
+          files: Paragraph_14a_${{ steps.version.outputs.name }}.pdf
+          fail_on_unmatched_files: true

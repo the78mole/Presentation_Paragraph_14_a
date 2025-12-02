@@ -4,152 +4,151 @@
 \section{Regionales}
 
 \begin{frame}{Verteilnetzbetreiber}
-   \begin{columns}
-      % Linke Spalte für das Bild
-      \column{0.70\textwidth}
-      \centering
-      \includegraphics[width=\linewidth]{images/Verteilnetzbetreiber_Umland_ERH.png}
+	\begin{columns}
+		% Linke Spalte für das Bild
+		\column{0.70\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/Verteilnetzbetreiber_Umland_ERH.png}
 
-      % Rechte Spalte für die Item-Liste
-      \column{0.3\textwidth}
-      Netzgesellschaften:
-      \begin{itemize}
-         \item \href{https://netze.estw.de/}{ESTW}
-         \item \href{https://www.bayernwerk-netz.de/de.html}{Bayernwerk}
-         \item \href{https://www.herzowerke.de/de/netz/stromnetz/}{Herzo-Werke}
-         \item \href{https://www.n-ergie-netz.de/}{N-ERGIE}
-         \item \href{https://www.stadtwerke-ebermannstadt.de/de/Kopfnavigation/Netze1/Stromnetz/}{Ebermannstadt}
-         \item \href{https://www.stadtwerke-forchheim.de/}{Forchheim}
-         \item \href{https://www.suec-netze.de/}{SÜC}
-      \end{itemize}
-      Bildquelle: \href{https://www.netze-und-versorger.de/}{infas360}
-   \end{columns}
+		% Rechte Spalte für die Item-Liste
+		\column{0.3\textwidth}
+		Netzgesellschaften:
+		\begin{itemize}
+			\item \href{https://netze.estw.de/}{ESTW}
+			\item \href{https://www.bayernwerk-netz.de/de.html}{Bayernwerk}
+			\item \href{https://www.herzowerke.de/de/netz/stromnetz/}{Herzo-Werke}
+			\item \href{https://www.n-ergie-netz.de/}{N-ERGIE}
+			\item \href{https://www.stadtwerke-ebermannstadt.de/de/Kopfnavigation/Netze1/Stromnetz/}{Ebermannstadt}
+			\item \href{https://www.stadtwerke-forchheim.de/}{Forchheim}
+			\item \href{https://www.suec-netze.de/}{SÜC}
+		\end{itemize}
+		Bildquelle: \href{https://www.netze-und-versorger.de/}{infas360}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Kurzübersicht Netzbetreiber}
-   \begin{table}[h]
-      \centering
-      % !TeX indents-off
-      {\tiny
-         \begin{tabular}{|l|cccc|c|c|ccc|}
-            \hline
-            \textbf{VNB} & \textbf{Q1} & \textbf{Q2} & \textbf{Q3} & \textbf{Q4} 
-            & \textbf{M1 (\EUR{}/a)} & \textbf{M2 (ct/kWh)} & \multicolumn{3}{c|}{\textbf{M3 (ct/kWh)}} \\\hline
-   
-            \multirow{3}{*}{\smp\ ESTW\cite{estwnetznutz2025}}
-              & \grok & \grok & \grok & \grok & \multirow{3}{*}{123,63 \smn} & \multirow{3}{*}{3,01 \sml} & NT & 22-6h             &  0,75\\
-              &       &       &       &       &                              &  & ST & 6-11,13-17,19-22h &  \textbf{7,52} \\
-              & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/11, red/11/13, yellow/13/17, red/17/19, yellow/19/22, green/22/24}}
-                                              &                              &  & HT & 11-13,17-19h      & 14,26 \\\hline
+	\begin{table}[h]
+		\centering
+		% !TeX indents-off
+		{\tiny
+			\begin{tabular}{|l|cccc|c|c|ccc|}
+				\hline
+				\textbf{VNB} & \textbf{Q1}                                                                                                          & \textbf{Q2}          & \textbf{Q3}                               & \textbf{Q4}
+				             & \textbf{M1 (\EUR{}/a)}                                                                                               & \textbf{M2 (ct/kWh)} & \multicolumn{3}{c|}{\textbf{M3 (ct/kWh)}}                                                                                                                      \\\hline
 
-            
-            \multirow{3}{*}{\sml\ Bayernwerk\cite{bayernwerknetznutz2025}} 
-              & \grok & \rdno & \rdno & \grok & \multirow{3}{*}{122,35 \smn} & \multirow{3}{*}{2,94 \sml} & NT & 0-5h              &  0,74 \\
-              &       &       &       &       &                              &  & ST & 5-17,21-0h        &  \textbf{7,35} \\
-              & \multicolumn{4}{c|}{\TimeBar{green/0/5, yellow/5/17, red/17/21, yellow/21/24}} 
-                                              &                              &  & HT & 17-21h            &  9,72 \\\hline
-            
-            \multirow{3}{*}{\sml\ HerzoWerke\cite{herzowerkenetznutz2025}} 
-              & \grok & \rdno & \rdno & \grok & \multirow{3}{*}{165,48 \smp} & \multirow{3}{*}{5,24 \sms} & NT & 0-6h              &  3,28 \\
-              &       &       &       &       &                              &  & ST & 6-11,12-16,20-0h  & \textbf{13,10} \\
-              & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/11, red/11/12, yellow/12/16, red/16/20, yellow/20/24}} 
-                                              &                              &  & HT & 11-12,16-20h      & 17,04 \\\hline
-         
-            \multirow{3}{*}{\smn\ N-ERGIE\cite{nergienetznutz2025}} 
-              & \grok & \rdno & \rdno & \grok & \multirow{3}{*}{115,08 \sms} & \multirow{3}{*}{2,55 \smp} & NT & 23-7h             &  0,64 \\
-              &       &       &       &       &                              &  & ST & 7-18,21-23h       &  6,38 \\
-              & \multicolumn{4}{c|}{\TimeBar{green/0/7, yellow/7/18, red/18/21, yellow/21/23, green/23/24}} 
-                                              &                              &  & HT & 18-21h            & \textbf{11,85} \\\hline
-   
-            \multirow{3}{*}{\smn\ Ebermannst.\cite{ebermannstadtnetznutz2025}} 
-              & \grok & \rdno & \rdno & \grok & \multirow{3}{*}{163,31 \smp} & \multirow{3}{*}{5,12 \sms} & NT & 22-6h             &  2,56 \\
-              &       &       &       &       &                              &  & ST & 6-17,21-22h       & \textbf{12,81} \\
-              & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/17, red/17/21, yellow/21/22, green/22/24}} 
-                                              &                              &  & HT & 17-21h            & 21,07 \\\hline
-   
-              \multirow{3}{*}{\sml\ Forchheim\cite{forchheimnetznutz2025}} 
-              & \grok & \rdno & \rdno & \grok & \multirow{3}{*}{141,26 \sml} & \multirow{3}{*}{3,95 \smn} & NT & 0-6h              &  1,97 \\
-              &       &       &       &       &                              &  & ST & 6-17,21-0h        &  \textbf{9,87} \\
-              & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/17, red/17/21, yellow/21/24}} 
-                                              &                              &  & HT & 17-21h            & 13,43 \\\hline
-            
-            \multirow{3}{*}{\sms\ SÜC\cite{suecnetznutz2025}} 
-              & \rdno & \grok & \grok & \rdno & \multirow{3}{*}{122,73 \smn} & \multirow{3}{*}{2,96 \sml} & NT & 10-14h            &  1,82 \\
-              &       &       &       &       &                              &  & ST & 22-10,14-17h      &  \textbf{7,40} \\
-              & \multicolumn{4}{c|}{\TimeBar{yellow/0/10, green/10/14, yellow/14/17, red/17/22, yellow/22/24}} 
-                                              &                              &  & HT & 17-22h & 11,84 \\\hline
-            
-         \end{tabular}
-      }
-      \caption{Verteilnetzbetreiber in der Region Erlangen}
-      \label{tab:verteilnetzbetreiber}
-   \end{table}
+				\multirow{3}{*}{\smp\ ESTW\cite{estwnetznutz2025}}
+				             & \grok                                                                                                                & \grok                & \grok                                     & \grok        & \multirow{3}{*}{123,63 \smn} & \multirow{3}{*}{3,01 \sml} & NT & 22-6h             & 0,75           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 6-11,13-17,19-22h & \textbf{7,52}  \\
+				             & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/11, red/11/13, yellow/13/17, red/17/19, yellow/19/22, green/22/24}}
+				             &                                                                                                                      &                      & HT                                        & 11-13,17-19h & 14,26                                                                                               \\\hline
+
+				\multirow{3}{*}{\sml\ Bayernwerk\cite{bayernwerknetznutz2025}}
+				             & \grok                                                                                                                & \rdno                & \rdno                                     & \grok        & \multirow{3}{*}{122,35 \smn} & \multirow{3}{*}{2,94 \sml} & NT & 0-5h              & 0,74           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 5-17,21-0h        & \textbf{7,35}  \\
+				             & \multicolumn{4}{c|}{\TimeBar{green/0/5, yellow/5/17, red/17/21, yellow/21/24}}
+				             &                                                                                                                      &                      & HT                                        & 17-21h       & 9,72                                                                                                \\\hline
+
+				\multirow{3}{*}{\sml\ HerzoWerke\cite{herzowerkenetznutz2025}}
+				             & \grok                                                                                                                & \rdno                & \rdno                                     & \grok        & \multirow{3}{*}{165,48 \smp} & \multirow{3}{*}{5,24 \sms} & NT & 0-6h              & 3,28           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 6-11,12-16,20-0h  & \textbf{13,10} \\
+				             & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/11, red/11/12, yellow/12/16, red/16/20, yellow/20/24}}
+				             &                                                                                                                      &                      & HT                                        & 11-12,16-20h & 17,04                                                                                               \\\hline
+
+				\multirow{3}{*}{\smn\ N-ERGIE\cite{nergienetznutz2025}}
+				             & \grok                                                                                                                & \rdno                & \rdno                                     & \grok        & \multirow{3}{*}{115,08 \sms} & \multirow{3}{*}{2,55 \smp} & NT & 23-7h             & 0,64           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 7-18,21-23h       & 6,38           \\
+				             & \multicolumn{4}{c|}{\TimeBar{green/0/7, yellow/7/18, red/18/21, yellow/21/23, green/23/24}}
+				             &                                                                                                                      &                      & HT                                        & 18-21h       & \textbf{11,85}                                                                                      \\\hline
+
+				\multirow{3}{*}{\smn\ Ebermannst.\cite{ebermannstadtnetznutz2025}}
+				             & \grok                                                                                                                & \rdno                & \rdno                                     & \grok        & \multirow{3}{*}{163,31 \smp} & \multirow{3}{*}{5,12 \sms} & NT & 22-6h             & 2,56           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 6-17,21-22h       & \textbf{12,81} \\
+				             & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/17, red/17/21, yellow/21/22, green/22/24}}
+				             &                                                                                                                      &                      & HT                                        & 17-21h       & 21,07                                                                                               \\\hline
+
+				\multirow{3}{*}{\sml\ Forchheim\cite{forchheimnetznutz2025}}
+				             & \grok                                                                                                                & \rdno                & \rdno                                     & \grok        & \multirow{3}{*}{141,26 \sml} & \multirow{3}{*}{3,95 \smn} & NT & 0-6h              & 1,97           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 6-17,21-0h        & \textbf{9,87}  \\
+				             & \multicolumn{4}{c|}{\TimeBar{green/0/6, yellow/6/17, red/17/21, yellow/21/24}}
+				             &                                                                                                                      &                      & HT                                        & 17-21h       & 13,43                                                                                               \\\hline
+
+				\multirow{3}{*}{\sms\ SÜC\cite{suecnetznutz2025}}
+				             & \rdno                                                                                                                & \grok                & \grok                                     & \rdno        & \multirow{3}{*}{122,73 \smn} & \multirow{3}{*}{2,96 \sml} & NT & 10-14h            & 1,82           \\
+				             &                                                                                                                      &                      &                                           &              &                              &                            & ST & 22-10,14-17h      & \textbf{7,40}  \\
+				             & \multicolumn{4}{c|}{\TimeBar{yellow/0/10, green/10/14, yellow/14/17, red/17/22, yellow/22/24}}
+				             &                                                                                                                      &                      & HT                                        & 17-22h       & 11,84                                                                                               \\\hline
+
+			\end{tabular}
+		}
+		\caption{Verteilnetzbetreiber in der Region Erlangen}
+		\label{tab:verteilnetzbetreiber}
+	\end{table}
 \end{frame}
 
 \begin{frame}{ESTW}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_ESTW.png}
-   \end{textblock*}
-   \includegraphics[width=8cm]{images/ESTW-Modul1.png}
-   \includegraphics[width=8cm]{images/ESTW-Modul2.png}
-   \includegraphics[width=8cm]{images/ESTW-Modul3.png}
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_ESTW.png}
+	\end{textblock*}
+	\includegraphics[width=8cm]{images/ESTW-Modul1.png}
+	\includegraphics[width=8cm]{images/ESTW-Modul2.png}
+	\includegraphics[width=8cm]{images/ESTW-Modul3.png}
 \end{frame}
 
 \begin{frame}{Bayernwerk}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_Bayernwerk.png}
-   \end{textblock*}
-   \includegraphics[width=5cm]{images/Bayernwerk-Modul1.png}
-   \includegraphics[width=7cm]{images/Bayernwerk-Modul2.png}
-   \includegraphics[width=9cm]{images/Bayernwerk-Modul3.png}
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_Bayernwerk.png}
+	\end{textblock*}
+	\includegraphics[width=5cm]{images/Bayernwerk-Modul1.png}
+	\includegraphics[width=7cm]{images/Bayernwerk-Modul2.png}
+	\includegraphics[width=9cm]{images/Bayernwerk-Modul3.png}
 \end{frame}
 
 \begin{frame}{Herzowerke}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_Herzowerke.png}
-   \end{textblock*}
-   \vspace{1.1cm}
-   \includegraphics[width=9cm]{images/HerzoWerke-Modul1.png}
-   \vspace{0.2cm}
-   \includegraphics[width=9cm]{images/HerzoWerke-Modul2.png}
-   \vspace{0.2cm}
-   \includegraphics[width=11cm]{images/HerzoWerke-Modul3.png}
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_Herzowerke.png}
+	\end{textblock*}
+	\vspace{1.1cm}
+	\includegraphics[width=9cm]{images/HerzoWerke-Modul1.png}
+	\vspace{0.2cm}
+	\includegraphics[width=9cm]{images/HerzoWerke-Modul2.png}
+	\vspace{0.2cm}
+	\includegraphics[width=11cm]{images/HerzoWerke-Modul3.png}
 \end{frame}
 
 \begin{frame}{N-ERGIE}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_N-ERGIE.png}
-   \end{textblock*}   
-   \includegraphics[width=7cm]{images/N-ERGIE-Modul1.png}
-   \includegraphics[width=7cm]{images/N-ERGIE-Modul2.png}
-   \includegraphics[width=10cm]{images/N-ERGIE-Modul3.png}
-\end{frame}   
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_N-ERGIE.png}
+	\end{textblock*}
+	\includegraphics[width=7cm]{images/N-ERGIE-Modul1.png}
+	\includegraphics[width=7cm]{images/N-ERGIE-Modul2.png}
+	\includegraphics[width=10cm]{images/N-ERGIE-Modul3.png}
+\end{frame}
 
 \begin{frame}{Stadtwerke Ebermannstadt}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_Ebermannstadt.png}
-   \end{textblock*}
-   \includegraphics[width=5.5cm]{images/Ebermannstadt-Modul1.png}\\
-   \includegraphics[width=5cm]{images/Ebermannstadt-Modul2.png}
-   \includegraphics[width=11cm]{images/Ebermannstadt-Modul3.png}
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_Ebermannstadt.png}
+	\end{textblock*}
+	\includegraphics[width=5.5cm]{images/Ebermannstadt-Modul1.png}\\
+	\includegraphics[width=5cm]{images/Ebermannstadt-Modul2.png}
+	\includegraphics[width=11cm]{images/Ebermannstadt-Modul3.png}
 \end{frame}
 
 \begin{frame}{Stadtwerke Forchheim}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_Forchheim.png}
-   \end{textblock*}
-   \vspace{0.6cm}
-   \includegraphics[width=8cm]{images/Forchheim-Modul1.png}
-   \includegraphics[width=8cm]{images/Forchheim-Modul2.png}
-   \vspace{0.6cm}
-   \includegraphics[width=10cm]{images/Forchheim-Modul3.png}
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_Forchheim.png}
+	\end{textblock*}
+	\vspace{0.6cm}
+	\includegraphics[width=8cm]{images/Forchheim-Modul1.png}
+	\includegraphics[width=8cm]{images/Forchheim-Modul2.png}
+	\vspace{0.6cm}
+	\includegraphics[width=10cm]{images/Forchheim-Modul3.png}
 \end{frame}
 
 \begin{frame}{Stadtwerke Cobug - SÜC}
-   \begin{textblock*}{3.3cm}(9.4cm,2cm)
-      \includegraphics[width=3cm]{images/Karte_Suec.png}
-   \end{textblock*}
-   \includegraphics[width=5cm]{images/SUeC-Modul1.png}
-   \includegraphics[width=7cm]{images/SUeC-Modul2.png}
-   \includegraphics[width=8cm]{images/SUeC-Modul3.png}
+	\begin{textblock*}{3.3cm}(9.4cm,2cm)
+		\includegraphics[width=3cm]{images/Karte_Suec.png}
+	\end{textblock*}
+	\includegraphics[width=5cm]{images/SUeC-Modul1.png}
+	\includegraphics[width=7cm]{images/SUeC-Modul2.png}
+	\includegraphics[width=8cm]{images/SUeC-Modul3.png}
 \end{frame}
