@@ -29,6 +29,8 @@ jobs:
 
       - name: Commit auto-fixes
         if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Prüfe, ob der letzte Commit vom Bot war
           LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
@@ -36,11 +38,17 @@ jobs:
             echo "⚠️ Last commit was already an auto-fix commit. Skipping to prevent loop."
             exit 0
           fi
-          
+
+          # Prüfe ob es überhaupt Änderungen gibt
+          if [[ -z $(git status --porcelain) ]]; then
+            echo "ℹ️ No changes to commit"
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A
-          git diff --staged --quiet || git commit -m "style: apply pre-commit auto-fixes"
+          git commit -m "style: apply pre-commit auto-fixes"
           git push
 
   build_latex:
