@@ -43,7 +43,7 @@ repos:
 
   # Check for common LaTeX mistakes
   - repo: https://github.com/jonasbb/pre-commit-latex-hooks
-    rev: v1.4.1
+    rev: v1.5.0
     hooks:
       - id: american-eg-ie
       - id: cleveref-capitalization
