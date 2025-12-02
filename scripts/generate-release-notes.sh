@@ -58,7 +58,7 @@ if command -v gh >/dev/null 2>&1; then
   done
 else
   echo "⚠️  GitHub CLI (gh) nicht verfügbar – verwende lokale Git-Tags." >&2
-  TAGS=($(git tag --sort=-creatordate | grep -E '^v[0-9]{4}\.[0-9]+$' | grep -v "$CURRENT_TAG"))
+  mapfile -t TAGS < <(git tag --sort=-creatordate | grep -E '^v[0-9]{4}\.[0-9]+$' | grep -v "$CURRENT_TAG")
 fi
 
 echo "🔍 Bekannte Release-Tags (ohne aktuellen):" >&2

@@ -29,6 +29,7 @@
 
 # Editor-spezifische Dateien
 *.bak
+*.bak?
 *.swp
 *.swo
 *~
@@ -50,3 +51,4 @@ release-notes.md
 # Custom temp working directories
 /calcs/
 /information/
+/node_modules/

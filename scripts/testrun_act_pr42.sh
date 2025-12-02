@@ -13,8 +13,7 @@ if ! gh extension list | grep -q "nektos/gh-act"; then
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo "📦 Installing gh-act extension..."
-        gh extension install nektos/gh-act
-        if [ $? -ne 0 ]; then
+        if ! gh extension install nektos/gh-act; then
             echo "❌ Failed to install gh-act extension"
             exit 1
         fi

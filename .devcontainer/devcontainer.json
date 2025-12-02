@@ -20,9 +20,7 @@
       ]
     }
   },
-  "mounts": [
-    // "source=${env:USERPROFILE}/.gitconfig,target=/root/.gitconfig,type=bind,consistency=cached" // Windows only to use Git credentials
-  ],
+  "mounts": [],
   "postCreateCommand": "sed -i 's/\r$//' .devcontainer/misc/*.sh;sh .devcontainer/misc/initialize.sh",
   "postAttachCommand": "git config --global core.editor \"code --wait\"",
   "runArgs": ["--env-file", ".env"]
