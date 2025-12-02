@@ -12,7 +12,7 @@ repos:
       - id: check-yaml
       - id: check-json
       - id: check-added-large-files
-        args: ['--maxkb=10000']
+        args: ["--maxkb=10000"]
       - id: check-case-conflict
       - id: check-merge-conflict
       - id: mixed-line-ending
@@ -22,7 +22,7 @@ repos:
     rev: v0.10.0.1
     hooks:
       - id: shellcheck
-        args: ['-x']
+        args: ["-x"]
 
   # Markdown formatting
   - repo: https://github.com/pre-commit/mirrors-prettier
@@ -37,7 +37,7 @@ repos:
     rev: V3.24.4
     hooks:
       - id: latexindent
-        args: ['-s', '-w', '-m', '-l']
+        args: ["-s", "-w", "-m", "-l"]
         types: [tex]
         exclude: '\.bbl$|\.aux$|\.log$|\.out$|\.toc$|\.nav$|\.snm$'
 

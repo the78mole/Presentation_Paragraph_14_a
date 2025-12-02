@@ -9,36 +9,47 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Install pre-commit
-        run: pip install pre-commit
-
-      - name: Run pre-commit checks
-        run: pre-commit run --all-files --show-diff-on-failure
-
-  build_latex:
-    runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
         with:
-          fetch-depth: 0 # Holt alle Commits und Tags
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
 
-      # Workaround for Windows devcontainer issue
-      - name: Make script executable
-        run: chmod +x ./scripts/generate-release-notes.sh
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Install pre-commit
+        run: uv tool install pre-commit
+
+      - name: Run pre-commit checks
+        run: uv tool run pre-commit run --all-files --show-diff-on-failure
+
+      - name: Commit auto-fixes
+        if: failure()
+        run: |
+          # Prüfe, ob der letzte Commit vom Bot war
+          LAST_COMMIT_MSG=$(git log -1 --pretty=%B)
+          if [[ "$LAST_COMMIT_MSG" == *"style: apply pre-commit auto-fixes"* ]]; then
+            echo "⚠️ Last commit was already an auto-fix commit. Skipping to prevent loop."
+            exit 0
+          fi
+          
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "style: apply pre-commit auto-fixes"
+          git push
+
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0 # Holt alle Commits und Tags
 
       - name: Set version name
         id: version
@@ -51,24 +62,10 @@ jobs:
             echo "name=${{ github.ref_name }}" >> $GITHUB_OUTPUT
           fi
 
-      - name: Generate Release Notes
-        if: startsWith(github.ref, 'refs/tags/')
-        run: |
-          ./scripts/generate-release-notes.sh release-notes.md "${{ github.ref_name }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Compile LaTeX document
-        #uses: xu-cheng/latex-action@v4
         uses: dante-ev/latex-action@latest
         with:
           root_file: Paragraph_14a.tex
-          #compiler: pdflatex
-          #args: -pdf
-          #args: "-pdf -latexoption=-file-line-error -latexoption=-interaction=nonstopmode"
-          #args: -interaction=nonstopmode -pdf -file-line-error
-          #args: -interaction=nonstopmode -shell-escape
-          #args: -synctex=0 -interaction=nonstopmode --shell-escape -pdf -file-line-error
 
       - name: Rename PDF
         run: |
@@ -81,11 +78,37 @@ jobs:
           name: Presentation.pdf
           path: Paragraph_14a_${{ steps.version.outputs.name }}.pdf
 
+  release:
+    runs-on: ubuntu-latest
+    needs: build_latex
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Make script executable
+        run: chmod +x ./scripts/generate-release-notes.sh
+
+      - name: Generate Release Notes
+        run: |
+          ./scripts/generate-release-notes.sh release-notes.md "${{ github.ref_name }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download PDF artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Presentation.pdf
+
       - name: Create GitHub Release
-        if: ${{ startsWith(github.ref, 'refs/tags/') && !env.ACT }}
+        if: ${{ !env.ACT }}
         uses: softprops/action-gh-release@v2
         with:
           name: "Presentation_${{ github.ref_name }}"
           body_path: release-notes.md
-          files: Paragraph_14a_${{ steps.version.outputs.name }}.pdf
+          files: Paragraph_14a_${{ github.ref_name }}.pdf
           fail_on_unmatched_files: true
