@@ -25,6 +25,7 @@ Step by Step:
 - (optional) rename main Texfile to `root.tex` or adjust CI configs if you want to use the CIs
 - Commit the files copied during the Devcontainer setup (`settings.json`, `.gitlab-ci.yml`, `latex_build.yml`)
 - If you do not see the following latex command menu, try reloading the window
+
 <p align="center">
     <img src="./misc/latex_command_menu.png" height="250"/>
 </p>
